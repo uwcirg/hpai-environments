@@ -1,0 +1,2 @@
+---- Aidbox ----
+create database aidbox;

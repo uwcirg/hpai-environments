@@ -1,0 +1,27 @@
+services:
+  aidbox:
+    extends:
+      file: ../base/docker-compose.yaml
+      service: aidbox
+    networks:
+      # expose Aidbox to internet
+      ingress:
+    labels:
+      # unauthenticated route
+      - traefik.enable=true
+      - traefik.http.routers.aidbox-${COMPOSE_PROJECT_NAME}.rule=Host(`aidbox.${BASE_DOMAIN}`)
+      - traefik.http.routers.aidbox-${COMPOSE_PROJECT_NAME}.entrypoints=websecure
+      - traefik.http.routers.aidbox-${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt
+  db:
+    extends:
+      file: ../base/docker-compose.yaml
+      service: db
+volumes:
+  db-data: {}
+networks:
+  # internal network for backing services
+  internal:
+  # ingress network
+  ingress:
+    external: true
+    name: external_web
