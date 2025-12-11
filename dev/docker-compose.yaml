@@ -12,6 +12,8 @@ services:
       - traefik.http.routers.aidbox-${COMPOSE_PROJECT_NAME}.rule=Host(`aidbox.${BASE_DOMAIN}`)
       - traefik.http.routers.aidbox-${COMPOSE_PROJECT_NAME}.entrypoints=websecure
       - traefik.http.routers.aidbox-${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt
+    env_file:
+      - aidbox.env
   db:
     extends:
       file: ../base/docker-compose.yaml
