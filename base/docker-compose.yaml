@@ -37,12 +37,12 @@ services:
       retries: 90
       start_period: 30s
   db:
-    image: postgres:${POSTGRES_IMAGE_TAG:-17}
+    image: postgres:${POSTGRES_IMAGE_TAG:-18}
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql
       # mount db creation script in place for bootstrap
       - ./config/db:/docker-entrypoint-initdb.d:ro
     healthcheck:
