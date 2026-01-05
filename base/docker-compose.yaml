@@ -12,6 +12,8 @@ services:
       LAUNCH_DEST: https://confidentialbackend.${BASE_DOMAIN}/launch.html
 
       # do not pass launch/patient as Epic will infer standalone launch
+      LAUNCH_FHIR_SCOPES: user/*.read launch openid fhirUser
+      # TODO remove once removed from uwcirg/helloworld-confidential-client-sof
       SOF_CLIENT_SCOPES: user/*.read launch openid fhirUser
     labels:
       - traefik.enable=true
