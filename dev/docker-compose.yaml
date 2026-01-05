@@ -1,4 +1,14 @@
 services:
+  confidentialbackend:
+    extends:
+      file: ../base/docker-compose.yaml
+      service: confidentialbackend
+    env_file:
+      confidentialbackend.env
+  redis:
+    extends:
+      file: ../base/docker-compose.yaml
+      service: redis
   aidbox:
     extends:
       file: ../base/docker-compose.yaml
