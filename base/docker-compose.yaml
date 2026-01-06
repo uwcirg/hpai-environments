@@ -23,7 +23,6 @@ services:
       - traefik.enable=true
       - traefik.http.routers.femr-${COMPOSE_PROJECT_NAME}.rule=Host(`femr.${BASE_DOMAIN}`)
       - traefik.http.routers.femr-${COMPOSE_PROJECT_NAME}.entrypoints=websecure
-      - traefik.http.routers.femr-${COMPOSE_PROJECT_NAME}.tls=true
       - traefik.http.routers.femr-${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt
     networks:
       - ingress
@@ -49,7 +48,6 @@ services:
       - traefik.http.routers.confidentialbackend-${COMPOSE_PROJECT_NAME}.rule=Host(`confidentialbackend.${BASE_DOMAIN}`) && (PathPrefix(`/auth`) || PathPrefix(`/fhir-router`) || PathPrefix(`/auditlog`))
 
       - traefik.http.routers.confidentialbackend-${COMPOSE_PROJECT_NAME}.entrypoints=websecure
-      - traefik.http.routers.confidentialbackend-${COMPOSE_PROJECT_NAME}.tls=true
       - traefik.http.routers.confidentialbackend-${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt
     networks:
       - ingress
