@@ -4,15 +4,6 @@ services:
     env_file:
       femr.env
     environment:
-      APPLICATION_TITLE: ISACC
-      ACTIVE_PATIENT_FLAG: "true"
-      LAUNCH_AFTER_PATIENT_CREATION: "true"
-      ENABLE_PROVIDER_FILTER: "true"
-      ENABLE_FILTER_FOR_TEST_PATIENTS: "true"
-      FILTER_FOR_TEST_PATIENTS_LABEL: "Include test recipients"
-      MORE_MENU: ""
-      NEED_PATIENT_BANNER: "true"
-      NEW_PATIENT_EXTENSIONS: '[{"url": "http://isacc.app/time-of-last-unfollowedup-message", "valueDateTime": "2073-01-01T00:00:00.0+00:00"}]'
       OIDC_AUTHORIZE_URL: "https://keycloak.${BASE_DOMAIN:-localtest.me}/auth/realms/fEMR/protocol/openid-connect/auth"
       OIDC_CLIENT_ID: femr_openid_client
       OIDC_ISSUER: "https://keycloak.${BASE_DOMAIN:-localtest.me}/auth/realms/fEMR"
@@ -20,35 +11,14 @@ services:
       OIDC_USERINFO_URI: "https://keycloak.${BASE_DOMAIN:-localtest.me}/auth/realms/fEMR/protocol/openid-connect/userinfo"
       OIDC_TOKEN_URI: "https://keycloak.${BASE_DOMAIN:-localtest.me}/auth/realms/fEMR/protocol/openid-connect/token"
       OIDC_TOKEN_INTROSPECTION_URI: "https://keycloak.${BASE_DOMAIN:-localtest.me}/auth/realms/fEMR/protocol/openid-connect/token/introspect"
-      # TODO change to INTERNAL_FHIR_API
-      # TODO switch to external API (requiring auth)
-      MAP_API: "http://fhir-internal:8080/fhir/"
-      REACTIVATE_PATIENT: "true"
-      SEARCH_TITLE_TEXT: "Recipient Search"
       # FHIR URL passed to SoF client
       SOF_HOST_FHIR_URL: 'https://fhirwall.${BASE_DOMAIN:-localtest.me}/fhir'
       SOF_CLIENTS: '[{"id":"ENROLLMENT", "label":"Enrollment", "launch_url":"https://enrollment.${BASE_DOMAIN:-localtest.me}/launch.html"},{"id":"MESSAGING", "label":"Messaging", "launch_url":"https://messaging.${BASE_DOMAIN:-localtest.me}/launch.html"}]'
-      LOGSERVER_URL: "https://logs.${BASE_DOMAIN:-localtest.me}"
       REDIS_URL: redis://redis:6379/1
-      MY_PATIENTS_FILTER_LABEL: "Recipients I am following"
-      DASHBOARD_COLUMNS: >-
-        [
-        {"expr":"$$.identifier[?(@.system=='http://isacc.app/user-id')].value","label":"ISACC Study ID","sortBy":"identifier"},
-        {"expr":"$$.name[0].given[0]","label":"First Name"},
-        {"expr":"$$.name[0].family","label":"Last Name"},
-        {"expr":"$$.birthDate","label":"Birth Date"},
-        {"dataType":"timeAgo","defaultSort":"asc","expr":"$$.extension[?(@.url=='http://isacc.app/time-of-last-unfollowedup-message')].valueDateTime","label":"Time Since Reply","sortBy":"time-of-last-unresponded-message"},
-        {"dataType":"date","expr":"$$.extension[?(@.url=='http://isacc.app/date-time-of-next-outgoing-message')].valueDateTime","label":"Next Message","sortBy":"date-time-of-next-outgoing-message"},
-        {"expr":"$$.generalPractitioner[0].display","label":"Primary Author","sortBy":"general-practitioner"}
-        ]
-
     depends_on:
       - fhirwall
       - keycloak
-      - logs
       - redis
-      - enrollment
-      - messaging
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.femr-${COMPOSE_PROJECT_NAME}.rule=Host(`femr.${BASE_DOMAIN:-localtest.me}`)"
