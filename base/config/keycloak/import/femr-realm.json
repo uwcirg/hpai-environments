@@ -1,8 +1,8 @@
 {
   "id": "4cb2b054-6a67-4563-8485-07979d5c1484",
-  "realm": "wahs",
-  "displayName": "${KEYCLOAK_REALM_NAME:WA Health Summary}",
-  "displayNameHtml": "${KEYCLOAK_REALM_NAME:WA Health Summary}",
+  "realm": "femr",
+  "displayName": "fEMR",
+  "displayNameHtml": "fEMR",
   "notBefore": 0,
   "defaultSignatureAlgorithm": "RS256",
   "revokeRefreshToken": false,
@@ -49,7 +49,7 @@
   "failureFactor": 30,
   "defaultRole": {
     "id": "8ed62380-471e-4b2b-ac7f-feea7118b4af",
-    "name": "default-roles-wahs",
+    "name": "default-roles-femr",
     "description": "${role_default-roles}",
     "composite": true,
     "clientRole": false,
@@ -109,20 +109,8 @@
       ]
     }
   ],
-  "clientScopeMappings": {
-    "account": [
-      {
-        "client": "account-console",
-        "roles": [
-          "manage-account",
-          "view-groups"
-        ]
-      }
-    ]
-  },
   "clients": [
     {
-      "id": "23d33b1c-6d75-478a-8243-68e919880398",
       "clientId": "shl_creator",
       "name": "SMART Health Links Creator",
       "description": "",
@@ -200,25 +188,6 @@
       },
       "fullScopeAllowed": true,
       "nodeReRegistrationTimeout": -1,
-      "protocolMappers": [
-        {
-          "id": "dd2d8f4b-b4d3-4994-aca2-7c5c0050283d",
-          "name": "idp",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-attribute-mapper",
-          "consentRequired": false,
-          "config": {
-            "introspection.token.claim": "true",
-            "userinfo.token.claim": "true",
-            "user.attribute": "idp",
-            "id.token.claim": "true",
-            "lightweight.claim": "false",
-            "access.token.claim": "true",
-            "claim.name": "idp",
-            "jsonType.label": "String"
-          }
-        }
-      ],
       "defaultClientScopes": [
         "web-origins",
         "acr",
@@ -244,63 +213,6 @@
         "configure": true,
         "manage": true
       }
-    },
-    {
-      "clientId": "logs_oauth2_proxy",
-      "name": "Logserver authentication",
-      "description": "",
-      "rootUrl": "",
-      "adminUrl": "",
-      "baseUrl": "",
-      "surrogateAuthRequired": false,
-      "enabled": true,
-      "alwaysDisplayInConsole": false,
-      "clientAuthenticatorType": "client-secret",
-      "secret": "${KEYCLOAK_WAHS_LOGS_CLIENT_SECRET}",
-      "redirectUris": [
-        "*"
-      ],
-      "webOrigins": [],
-      "notBefore": 0,
-      "bearerOnly": false,
-      "consentRequired": false,
-      "standardFlowEnabled": true,
-      "implicitFlowEnabled": false,
-      "directAccessGrantsEnabled": true,
-      "serviceAccountsEnabled": false,
-      "publicClient": false,
-      "frontchannelLogout": true,
-      "protocol": "openid-connect",
-      "attributes": {
-        "client.secret.creation.time": "1736274653",
-        "oauth2.device.authorization.grant.enabled": "false",
-        "backchannel.logout.revoke.offline.tokens": "false",
-        "use.refresh.tokens": "true",
-        "oidc.ciba.grant.enabled": "false",
-        "backchannel.logout.session.required": "true",
-        "client_credentials.use_refresh_token": "false",
-        "acr.loa.map": "{}",
-        "require.pushed.authorization.requests": "false",
-        "tls.client.certificate.bound.access.tokens": "false",
-        "display.on.consent.screen": "false",
-        "token.response.type.bearer.lower-case": "false"
-      },
-      "authenticationFlowBindingOverrides": {},
-      "fullScopeAllowed": true,
-      "nodeReRegistrationTimeout": -1,
-      "defaultClientScopes": [
-        "web-origins",
-        "acr",
-        "roles",
-        "profile",
-        "email"
-      ],
-      "optionalClientScopes": [
-        "address",
-        "phone",
-        "offline_access",
-        "microprofile-jwt"
-      ]
     }
   ],
   "clientScopes": [
@@ -323,8 +235,7 @@
           "config": {
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "introspection.token.claim": "true",
-            "userinfo.token.claim": "true"
+            "introspection.token.claim": "true"
           }
         }
       ]
@@ -375,13 +286,6 @@
       ]
     },
     {
-      "id": "b1a46bef-7912-4ea4-acd9-73c44d258ace",
-      "name": "openid",
-      "description": "OpenID Connect built-in scope: openid",
-      "protocol": "openid-connect",
-      "attributes": {}
-    },
-    {
       "id": "9ba8b7d4-ebab-4d16-a582-cf359d72e827",
       "name": "basic",
       "description": "OpenID Connect scope for add all basic claims to the token",
@@ -410,25 +314,14 @@
           "consentRequired": false,
           "config": {
             "user.session.note": "AUTH_TIME",
-            "introspection.token.claim": "true",
-            "userinfo.token.claim": "true",
             "id.token.claim": "true",
+            "introspection.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "auth_time",
             "jsonType.label": "long"
           }
         }
       ]
-    },
-    {
-      "id": "b1a46bef-7912-4ea4-acd9-b06c07ee8b34",
-      "name": "online_access",
-      "description": "OpenID Connect built-in scope: online_access",
-      "protocol": "openid-connect",
-      "attributes": {
-        "consent.screen.text": "${onlineAccessScopeConsentText}",
-        "display.on.consent.screen": "true"
-      }
     },
     {
       "id": "b537fd31-3bce-4a63-ab42-86b71385b908",
@@ -512,9 +405,8 @@
           "consentRequired": false,
           "config": {
             "user.session.note": "client_id",
-            "introspection.token.claim": "true",
-            "userinfo.token.claim": "true",
             "id.token.claim": "true",
+            "introspection.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "client_id",
             "jsonType.label": "String"
@@ -528,9 +420,8 @@
           "consentRequired": false,
           "config": {
             "user.session.note": "clientAddress",
-            "introspection.token.claim": "true",
-            "userinfo.token.claim": "true",
             "id.token.claim": "true",
+            "introspection.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "clientAddress",
             "jsonType.label": "String"
@@ -544,9 +435,8 @@
           "consentRequired": false,
           "config": {
             "user.session.note": "clientHost",
-            "introspection.token.claim": "true",
-            "userinfo.token.claim": "true",
             "id.token.claim": "true",
+            "introspection.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "clientHost",
             "jsonType.label": "String"
@@ -573,7 +463,6 @@
           "config": {
             "introspection.token.claim": "true",
             "multivalued": "true",
-            "userinfo.token.claim": "true",
             "user.attribute": "foo",
             "id.token.claim": "true",
             "access.token.claim": "true",
@@ -941,13 +830,12 @@
           "protocolMapper": "oidc-organization-membership-mapper",
           "consentRequired": false,
           "config": {
-            "introspection.token.claim": "true",
-            "multivalued": "true",
-            "userinfo.token.claim": "true",
             "id.token.claim": "true",
+            "introspection.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "organization",
-            "jsonType.label": "String"
+            "jsonType.label": "String",
+            "multivalued": "true"
           }
         }
       ]
@@ -1035,10 +923,6 @@
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
   "smtpServer": {},
-  "loginTheme": "ips",
-  "accountTheme": "",
-  "adminTheme": "",
-  "emailTheme": "",
   "eventsEnabled": false,
   "eventsListeners": [
     "jboss-logging"
@@ -1049,7 +933,6 @@
   "identityProviders": [
     {
       "alias": "google",
-      "displayName": "",
       "internalId": "c89e7660-1b6f-4596-bbef-090d4dd31f74",
       "providerId": "google",
       "enabled": "${KEYCLOAK_GOOGLE_IDP_ENABLED}",
@@ -1059,13 +942,8 @@
       "addReadTokenRoleOnCreate": false,
       "authenticateByDefault": false,
       "linkOnly": false,
-      "hideOnLogin": false,
       "firstBrokerLoginFlowAlias": "first broker login",
       "config": {
-        "acceptsPromptNoneForwardFromClient": "false",
-        "disableUserInfo": "false",
-        "filteredByClaim": "false",
-        "syncMode": "LEGACY",
         "clientSecret": "${KEYCLOAK_GOOGLE_IDP_CLIENT_SECRET}",
         "clientId": "${KEYCLOAK_GOOGLE_IDP_CLIENT_ID}",
         "caseSensitiveOriginalUsername": "false"
@@ -1085,6 +963,7 @@
       }
     }
   ],
+  "identityProviderMappers": [],
   "components": {
     "org.keycloak.services.clientregistration.policy.ClientRegistrationPolicy": [
       {
@@ -1095,13 +974,13 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "oidc-full-name-mapper",
-            "saml-role-list-mapper",
-            "oidc-usermodel-attribute-mapper",
-            "oidc-sha256-pairwise-sub-mapper",
-            "saml-user-attribute-mapper",
             "oidc-usermodel-property-mapper",
+            "oidc-sha256-pairwise-sub-mapper",
+            "oidc-usermodel-attribute-mapper",
+            "oidc-full-name-mapper",
+            "saml-user-attribute-mapper",
             "saml-user-property-mapper",
+            "saml-role-list-mapper",
             "oidc-address-mapper"
           ]
         }
@@ -1114,14 +993,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
+            "oidc-address-mapper",
+            "oidc-usermodel-property-mapper",
             "saml-role-list-mapper",
             "oidc-full-name-mapper",
             "oidc-sha256-pairwise-sub-mapper",
-            "oidc-usermodel-property-mapper",
-            "oidc-address-mapper",
-            "saml-user-property-mapper",
             "saml-user-attribute-mapper",
-            "oidc-usermodel-attribute-mapper"
+            "oidc-usermodel-attribute-mapper",
+            "saml-user-property-mapper"
           ]
         }
       },
@@ -1189,18 +1068,6 @@
         "config": {
           "allow-default-scopes": [
             "true"
-          ]
-        }
-      }
-    ],
-    "org.keycloak.userprofile.UserProfileProvider": [
-      {
-        "id": "fecd14af-e110-4dc6-8fd1-0aeaadeddebf",
-        "providerId": "declarative-user-profile",
-        "subComponents": {},
-        "config": {
-          "kc.user.profile.config": [
-            "{\"attributes\":[{\"name\":\"username\",\"displayName\":\"${username}\",\"validations\":{\"length\":{\"min\":3,\"max\":255},\"username-prohibited-characters\":{},\"up-username-not-idn-homograph\":{}},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"email\",\"displayName\":\"${email}\",\"validations\":{\"email\":{},\"length\":{\"max\":255}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"firstName\",\"displayName\":\"${firstName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"lastName\",\"displayName\":\"${lastName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"terms-conditions\",\"displayName\":\"Terms and Conditions\",\"validations\":{\"options\":{\"options\":[\"I accept the terms and conditions\"]}},\"annotations\":{\"inputType\":\"multiselect-checkboxes\",\"inputHelperTextBefore\":\"Please read and accept the terms below to continue.\"},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"terms_and_conditions\",\"displayName\":\"Terms and Conditions\",\"validations\":{},\"annotations\":{},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false}],\"groups\":[{\"name\":\"user-metadata\",\"displayHeader\":\"User metadata\",\"displayDescription\":\"Attributes, which refer to user metadata\"}]}"
           ]
         }
       }
@@ -1798,7 +1665,7 @@
         {
           "authenticator": "registration-terms-and-conditions",
           "authenticatorFlow": false,
-          "requirement": "REQUIRED",
+          "requirement": "DISABLED",
           "priority": 70,
           "autheticatorFlow": false,
           "userSetupAllowed": false
@@ -1896,7 +1763,7 @@
       "alias": "TERMS_AND_CONDITIONS",
       "name": "Terms and Conditions",
       "providerId": "TERMS_AND_CONDITIONS",
-      "enabled": true,
+      "enabled": false,
       "defaultAction": false,
       "priority": 20,
       "config": {}
@@ -2000,7 +1867,6 @@
     "realmReusableOtpCode": "false",
     "cibaExpiresIn": "120",
     "oauth2DeviceCodeLifespan": "600",
-    "oauth2DevicePollingInterval": "5",
     "parRequestUriLifespan": "60",
     "clientSessionMaxLifespan": "0",
     "frontendUrl": "",
