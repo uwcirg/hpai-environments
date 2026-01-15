@@ -138,7 +138,9 @@ services:
     expose:
       - 8080
     networks:
-      - internal
+      internal:
+        aliases:
+          - fhir-internal
     healthcheck:
       test: curl -f http://localhost:8080/health || exit 1
       interval: 5s
