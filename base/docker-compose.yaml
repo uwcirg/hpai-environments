@@ -107,6 +107,35 @@ services:
     networks:
       - ingress
       - internal
+  fhir-auth:
+    image: ghcr.io/uwcirg/jwt-proxy:${PROXY_IMAGE_TAG:-latest}
+    environment:
+      UPSTREAM_SERVER: http://fhir-internal:8080
+      OIDC_AUTHORIZE_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/auth
+      OIDC_TOKEN_URI: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/token
+      OIDC_TOKEN_INTROSPECTION_URI: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/token/introspect
+      JWKS_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/certs
+      PATH_WHITELIST: /fhir/metadata,/fhir/.well-known/smart-configuration
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.fhir-auth-${COMPOSE_PROJECT_NAME}.rule=Host(`fhir-auth.${BASE_DOMAIN}`)
+      - traefik.http.routers.fhir-auth-${COMPOSE_PROJECT_NAME}.entrypoints=websecure
+      - traefik.http.routers.fhir-auth-${COMPOSE_PROJECT_NAME}.tls=true
+      - traefik.http.routers.fhir-auth-${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt
+
+      # add CORS middleware, configured to return `Access-Control-Allow-Origin: *`
+      # NB accessControlAllowOrigin is deprecated, but not noted in docs
+      # https://github.com/traefik/traefik/issues/8796
+      - traefik.http.middlewares.fhir-auth-${COMPOSE_PROJECT_NAME}-cors.headers.accessControlAllowOriginList=*
+      # allow all verbs used by FHIR REST
+      - traefik.http.middlewares.fhir-auth-${COMPOSE_PROJECT_NAME}-cors.headers.accessControlAllowMethods=HEAD,GET,OPTIONS,PATCH,POST,PUT,DELETE
+      - traefik.http.middlewares.fhir-auth-${COMPOSE_PROJECT_NAME}-cors.headers.accessControlAllowHeaders=Authorization,Origin,Content-Type,Accept,Cache-Control
+      - traefik.http.routers.fhir-auth-${COMPOSE_PROJECT_NAME}.middlewares=fhir-auth-${COMPOSE_PROJECT_NAME}-cors
+    depends_on:
+      - aidbox
+    networks:
+      - ingress
+      - internal
 
   aidbox:
     image: healthsamurai/aidboxone:${AIDBOX_IMAGE_TAG:-2510}
