@@ -13,11 +13,11 @@ services:
       OIDC_TOKEN_INTROSPECTION_URI: https://keycloak.${BASE_DOMAIN}/auth/realms/fEMR/protocol/openid-connect/token/introspect
 
       # FHIR URL passed to SoF client
-      SOF_HOST_FHIR_URL: https://fhirwall.${BASE_DOMAIN}/fhir
+      SOF_HOST_FHIR_URL: https://fhir-auth.${BASE_DOMAIN}/fhir
       SOF_CLIENTS: '[{"id":"ENROLLMENT", "label":"Enrollment", "launch_url":"https://enrollment.${BASE_DOMAIN}/launch.html"},{"id":"MESSAGING", "label":"Messaging", "launch_url":"https://messaging.${BASE_DOMAIN}/launch.html"}]'
       REDIS_URL: redis://redis:6379/2
     depends_on:
-      - fhirwall
+      - fhir-auth
       - keycloak
       - redis
     labels:
