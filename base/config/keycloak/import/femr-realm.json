@@ -1,6 +1,6 @@
 {
   "id": "12fd57ff-7c83-4c22-a5b4-cad8f44476ac",
-  "realm": "femr2",
+  "realm": "femr",
   "notBefore": 0,
   "defaultSignatureAlgorithm": "RS256",
   "revokeRefreshToken": false,
@@ -47,7 +47,7 @@
   "failureFactor": 30,
   "defaultRole": {
     "id": "f787dcc1-ed3d-487f-a340-c8d2267b3b93",
-    "name": "default-roles-femr2",
+    "name": "default-roles-femr",
     "description": "${role_default-roles}",
     "composite": true,
     "clientRole": false,
@@ -122,13 +122,13 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/femr2/account/",
+      "baseUrl": "/realms/femr/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/femr2/account/*"
+        "/realms/femr/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -169,13 +169,13 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/femr2/account/",
+      "baseUrl": "/realms/femr/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/femr2/account/*"
+        "/realms/femr/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -470,13 +470,13 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/femr2/console/",
+      "baseUrl": "/admin/femr/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/admin/femr2/console/*"
+        "/admin/femr/console/*"
       ],
       "webOrigins": [
         "+"
