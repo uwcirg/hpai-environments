@@ -42,6 +42,7 @@ services:
       LAUNCH_FHIR_SCOPES: user/*.read launch openid fhirUser
       # TODO remove once removed from uwcirg/helloworld-confidential-client-sof
       SOF_CLIENT_SCOPES: user/*.read launch openid fhirUser
+      SOF_CLIENT_ID: ${SOF_CLIENT_ID:-hpai_openid_client}
     labels:
       - traefik.enable=true
       - traefik.http.routers.confidentialbackend-${COMPOSE_PROJECT_NAME}.rule=Host(`confidentialbackend.${BASE_DOMAIN}`) && (PathPrefix(`/auth`) || PathPrefix(`/fhir-router`) || PathPrefix(`/auditlog`))

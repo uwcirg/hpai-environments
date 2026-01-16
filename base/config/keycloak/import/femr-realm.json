@@ -319,7 +319,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "${__KEYCLOAK_FEMR_REALM_FEMR_OPENID_CLIENT_SECRET}",
       "redirectUris": [
         "*"
       ],
@@ -377,7 +377,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "${__KEYCLOAK_FEMR_REALM_HPAI_OPENID_CLIENT_SECRET}",
       "redirectUris": [
         "*"
       ],
