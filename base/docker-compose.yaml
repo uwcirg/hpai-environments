@@ -12,7 +12,7 @@ services:
 
       # FHIR URL passed to SoF client
       SOF_HOST_FHIR_URL: https://fhir-auth.${BASE_DOMAIN}/fhir
-      SOF_CLIENTS: '[{"id":"SURVEY", "label":"Survey", "launch_url":"https://survey.${BASE_DOMAIN}/launch.html"}]'
+      SOF_CLIENTS: '[{"id":"SURVEY", "label":"Survey", "launch_url":"https://confidentialbackend.${BASE_DOMAIN}/auth/launch"}]'
       REDIS_URL: redis://redis:6379/2
       # MAP_API: http://fhir-internal:8080/fhir/
       MAP_API: https://fhir-auth.${BASE_DOMAIN}/fhir/
@@ -52,7 +52,7 @@ services:
       PREFERRED_URL_SCHEME: https
       SESSION_COOKIE_SECURE: "true"
       # ultimate destination after SoF launch and backend auth
-      LAUNCH_DEST: https://confidentialbackend.${BASE_DOMAIN}/launch.html
+      LAUNCH_DEST: https://survey.${BASE_DOMAIN}/launch.html
 
       # do not pass launch/patient as Epic will infer standalone launch
       LAUNCH_FHIR_SCOPES: user/*.read launch openid fhirUser
