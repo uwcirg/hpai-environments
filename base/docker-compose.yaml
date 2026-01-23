@@ -33,6 +33,7 @@ services:
     environment:
       REACT_APP_CONF_API_URL: https://confidentialbackend.${BASE_DOMAIN}
       REACT_APP_SYSTEM_TYPE: development
+      REACT_APP_QUESTIONNAIRE_ID: hpai-provider-questionnaire
     labels:
       - traefik.enable=true
       - traefik.http.routers.survey-${COMPOSE_PROJECT_NAME}.rule=Host(`survey.${BASE_DOMAIN}`)
