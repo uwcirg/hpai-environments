@@ -10,11 +10,11 @@
         "matcho": {
           "user": "nil?"
         },
-        "description": "allow unauthenticated FHIR access",
+        "description": "allow unauthenticated FHIR access"
       },
       "request": {
         "method": "PUT",
-        "url": "/Questionnaire/sample-questionnaire"
+        "url": "/AccessPolicy/disable-auth"
       }
     },
     {
