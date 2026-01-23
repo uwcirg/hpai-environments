@@ -4,28 +4,27 @@
   "entry": [
     {
       "resource": {
-        "resourceType": "SDCConfig",
-        "name": "custom-renderers-config",
-        "default": true,
-        "id": "custom-renderer-config",
-        "builder": {
-          "custom-renderers": [
+        "resourceType": "AccessPolicy",
+        "id": "disable-auth",
+        "engine": "matcho",
+        "matcho": {
+          "user": "nil?"
+        },
+        "description": "allow unauthenticated FHIR access",
+        "meta": {
+          "lastUpdated": "2026-01-22T00:21:00.380382Z",
+          "versionId": "18",
+          "extension": [
             {
-              "name": "aidbox-form-csiro-renderer",
-              "source": "http://localhost:8081/aidbox-forms-renderer-csiro-webcomponent.js",
-              "title": "CSIRO"
-            },
-            {
-              "name": "simple-questionnaire-renderer",
-              "source": "http://localhost:8081/simple-questionnaire-renderer.js",
-              "title": "Simple Questionnaire Renderer"
+              "url": "https://aidbox.app/ex/createdAt",
+              "valueInstant": "2026-01-22T00:21:00.380382Z"
             }
           ]
         }
       },
       "request": {
         "method": "PUT",
-        "url": "SDCConfig/custom-renderer-config"
+        "url": "/Questionnaire/sample-questionnaire"
       }
     },
     {
