@@ -163,6 +163,9 @@ services:
       BOX_FHIR_SEARCH_INCLUDE_CONFORMANT: true
       BOX_FHIR_SEARCH_AUTHORIZE_INLINE_REQUESTS: true
       BOX_SECURITY_AUDIT_LOG_ENABLED: true
+      BOX_INIT_BUNDLE: file:///data/init-bundle.json
+    volumes:
+      - ./config/aidbox/init-bundle.json:/data/init-bundle.json:ro
     depends_on:
       - db
     expose:
