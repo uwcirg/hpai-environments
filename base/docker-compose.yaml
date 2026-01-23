@@ -45,6 +45,9 @@ services:
       # TODO remove once removed from uwcirg/helloworld-confidential-client-sof
       SOF_CLIENT_SCOPES: user/*.read launch openid fhirUser
       SOF_CLIENT_ID: ${SOF_CLIENT_ID:-hpai_openid_client}
+      SOF_AUTHORIZE_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/auth
+      SOF_ACCESS_TOKEN_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/token
+      SOF_JWKS_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/certs
     labels:
       - traefik.enable=true
       - traefik.http.routers.confidentialbackend-${COMPOSE_PROJECT_NAME}.rule=Host(`confidentialbackend.${BASE_DOMAIN}`) && (PathPrefix(`/auth`) || PathPrefix(`/fhir-router`) || PathPrefix(`/auditlog`))
