@@ -31,7 +31,6 @@ services:
   survey:
     image: ghcr.io/uwcirg/hpai-client-sof:${SURVEY_IMAGE_TAG:-latest}
     environment:
-      REACT_APP_CLIENT_ID: hpai_openid_client
       REACT_APP_CONF_API_URL: https://confidentialbackend.${BASE_DOMAIN}
       REACT_APP_SYSTEM_TYPE: development
     labels:
