@@ -3,7 +3,7 @@ services:
   femr:
     environment:
       # sets app.config.debug
-      FLASK_DEBUG: "true"
+      FLASK_DEBUG: true
       FLASK_ENV: development
       # use frontend built into docker image
       STATIC_DIR: /opt/cosri-patientsearch/patientsearch/static
