@@ -12,7 +12,7 @@ services:
 
       # FHIR URL passed to SoF client
       SOF_HOST_FHIR_URL: https://fhir-auth.${BASE_DOMAIN}/fhir
-      SOF_CLIENTS: '[{"id":"ENROLLMENT", "label":"Enrollment", "launch_url":"https://enrollment.${BASE_DOMAIN}/launch.html"},{"id":"MESSAGING", "label":"Messaging", "launch_url":"https://messaging.${BASE_DOMAIN}/launch.html"}]'
+      SOF_CLIENTS: '[{"id":"SURVEY", "label":"Survey", "launch_url":"https://survey.${BASE_DOMAIN}/launch.html"}]'
       REDIS_URL: redis://redis:6379/2
       # MAP_API: http://fhir-internal:8080/fhir/
       MAP_API: https://fhir-auth.${BASE_DOMAIN}/fhir/
@@ -28,6 +28,20 @@ services:
     networks:
       - ingress
       - internal
+  survey:
+    image: ghcr.io/uwcirg/hpai-client-sof:${SURVEY_IMAGE_TAG:-latest}
+    environment:
+      REACT_APP_CLIENT_ID: hpai_openid_client
+      REACT_APP_CONF_API_URL: https://confidentialbackend.${BASE_DOMAIN}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.survey-${COMPOSE_PROJECT_NAME}.rule=Host(`survey.${BASE_DOMAIN}`)
+
+      - traefik.http.routers.survey-${COMPOSE_PROJECT_NAME}.entrypoints=websecure
+      - traefik.http.routers.survey-${COMPOSE_PROJECT_NAME}.tls=true
+      - traefik.http.routers.survey-${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt
+    networks:
+      - ingress
   confidentialbackend:
     image: ghcr.io/uwcirg/helloworld-confidential-client-sof:${CONFIDENTIALBACKEND_IMAGE_TAG:-latest}
     environment:
