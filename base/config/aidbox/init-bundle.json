@@ -11,16 +11,6 @@
           "user": "nil?"
         },
         "description": "allow unauthenticated FHIR access",
-        "meta": {
-          "lastUpdated": "2026-01-22T00:21:00.380382Z",
-          "versionId": "18",
-          "extension": [
-            {
-              "url": "https://aidbox.app/ex/createdAt",
-              "valueInstant": "2026-01-22T00:21:00.380382Z"
-            }
-          ]
-        }
       },
       "request": {
         "method": "PUT",
