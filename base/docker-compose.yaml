@@ -56,9 +56,9 @@ services:
       LAUNCH_DEST: https://survey.${BASE_DOMAIN}/launch.html
 
       # do not pass launch/patient as Epic will infer standalone launch
-      LAUNCH_FHIR_SCOPES: user/*.read launch openid fhirUser
+      LAUNCH_FHIR_SCOPES: launch patient/*.cruds user/*.cruds openid fhirUser
       # TODO remove once removed from uwcirg/helloworld-confidential-client-sof
-      SOF_CLIENT_SCOPES: user/*.read launch openid fhirUser
+      SOF_CLIENT_SCOPES: launch patient/*.cruds user/*.cruds openid fhirUser
       SOF_CLIENT_ID: ${SOF_CLIENT_ID:-hpai_openid_client}
       SOF_AUTHORIZE_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/auth
       SOF_ACCESS_TOKEN_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/token
