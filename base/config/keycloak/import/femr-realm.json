@@ -410,9 +410,14 @@
       "defaultClientScopes": [
         "web-origins",
         "acr",
+        "patient/*.cruds",
+        "openid",
         "roles",
         "profile",
+        "user/*.cruds",
+        "launch",
         "basic",
+        "fhirUser",
         "email"
       ],
       "optionalClientScopes": [
@@ -1213,6 +1218,66 @@
           }
         }
       ]
+    },
+    {
+      "id": "815baa40-067e-4851-ac5d-dfe835835de1",
+      "name": "launch",
+      "description": "Permission to obtain launch context when app is launched from an EHR.",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "false",
+        "gui.order": "",
+        "consent.screen.text": ""
+      }
+    },
+    {
+      "id": "5acff0cd-f24e-40e0-8952-1bf9b90c120c",
+      "name": "openid",
+      "description": "Permission to authenticate the current user and obtain their verified identity",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "false",
+        "gui.order": "",
+        "consent.screen.text": ""
+      }
+    },
+    {
+      "id": "289aced2-7e96-4e11-8946-03901eb85cff",
+      "name": "fhirUser",
+      "description": "Permission to identify the FHIR resource that represents the current user",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "false",
+        "gui.order": "",
+        "consent.screen.text": ""
+      }
+    },
+    {
+      "id": "b5f72418-246c-47a6-ac67-8b63c1141e26",
+      "name": "user/*.cruds",
+      "description": "Permission to read and write all resources that the current user can access",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "false",
+        "gui.order": "",
+        "consent.screen.text": ""
+      }
+    },
+    {
+      "id": "6e571a2e-2989-4601-b2de-95d43c0f04c0",
+      "name": "patient/*.cruds",
+      "description": "Permission to read and write all resources for the current patient",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "false",
+        "gui.order": "",
+        "consent.screen.text": ""
+      }
     }
   ],
   "defaultDefaultClientScopes": [
