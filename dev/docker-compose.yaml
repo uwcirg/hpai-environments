@@ -13,6 +13,12 @@ services:
       service: femr
     env_file:
       femr.env
+  survey:
+    extends:
+      file: ../base/docker-compose.yaml
+      service: survey
+    env_file:
+      survey.env
   confidentialbackend:
     extends:
       file: ../base/docker-compose.yaml
