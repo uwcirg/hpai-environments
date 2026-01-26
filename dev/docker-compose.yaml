@@ -1,4 +1,24 @@
 services:
+  keycloak:
+    extends:
+      file: ../base/docker-compose.yaml
+      service: keycloak
+    environment:
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    env_file:
+      keycloak.env
+  femr:
+    extends:
+      file: ../base/docker-compose.yaml
+      service: femr
+    env_file:
+      femr.env
+  survey:
+    extends:
+      file: ../base/docker-compose.yaml
+      service: survey
+    env_file:
+      survey.env
   confidentialbackend:
     extends:
       file: ../base/docker-compose.yaml
@@ -9,6 +29,12 @@ services:
     extends:
       file: ../base/docker-compose.yaml
       service: redis
+  fhir-auth:
+    extends:
+      file: ../base/docker-compose.yaml
+      service: fhir-auth
+    env_file:
+      fhir-auth.env
   aidbox:
     extends:
       file: ../base/docker-compose.yaml

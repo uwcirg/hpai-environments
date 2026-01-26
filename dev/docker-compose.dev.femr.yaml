@@ -1,0 +1,14 @@
+# docker-compose development override for femr
+services:
+  femr:
+    environment:
+      # sets app.config.debug
+      FLASK_DEBUG: true
+      FLASK_ENV: development
+      # use frontend built into docker image
+      STATIC_DIR: /opt/cosri-patientsearch/patientsearch/static
+    command: sh -c "flask run --host 0.0.0.0 --port $$PORT"
+    working_dir: /opt/app
+    volumes:
+    # set in .env
+      - ${FEMR_CHECKOUT_DIR}/:/opt/app

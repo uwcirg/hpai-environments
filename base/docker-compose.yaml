@@ -1,4 +1,48 @@
 services:
+  femr:
+    image: ghcr.io/uwcirg/cosri-patientsearch:${FEMR_IMAGE_TAG:-develop}
+    environment:
+      OIDC_AUTHORIZE_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/auth
+      OIDC_CLIENT_ID: femr_openid_client
+      OIDC_ISSUER: https://keycloak.${BASE_DOMAIN}/realms/femr
+      OIDC_REDIRECT_URIS: https://keycloak.${BASE_DOMAIN}/oidc_callback
+      OIDC_USERINFO_URI: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/userinfo
+      OIDC_TOKEN_URI: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/token
+      OIDC_TOKEN_INTROSPECTION_URI: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/token/introspect
+
+      # FHIR URL passed to SoF client
+      SOF_HOST_FHIR_URL: https://fhir-auth.${BASE_DOMAIN}/fhir
+      SOF_CLIENTS: '[{"id":"SURVEY", "label":"Survey", "launch_url":"https://confidentialbackend.${BASE_DOMAIN}/auth/launch"}]'
+      REDIS_URL: redis://redis:6379/2
+      # MAP_API: http://fhir-internal:8080/fhir/
+      MAP_API: https://fhir-auth.${BASE_DOMAIN}/fhir/
+    depends_on:
+      - fhir-auth
+      - keycloak
+      - redis
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.femr-${COMPOSE_PROJECT_NAME}.rule=Host(`femr.${BASE_DOMAIN}`)
+      - traefik.http.routers.femr-${COMPOSE_PROJECT_NAME}.entrypoints=websecure
+      - traefik.http.routers.femr-${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt
+    networks:
+      - ingress
+      - internal
+  survey:
+    image: ghcr.io/uwcirg/hpai-client-sof:${SURVEY_IMAGE_TAG:-latest}
+    environment:
+      REACT_APP_CONF_API_URL: https://confidentialbackend.${BASE_DOMAIN}
+      REACT_APP_SYSTEM_TYPE: development
+      REACT_APP_QUESTIONNAIRE_ID: hpai-provider-questionnaire
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.survey-${COMPOSE_PROJECT_NAME}.rule=Host(`survey.${BASE_DOMAIN}`)
+
+      - traefik.http.routers.survey-${COMPOSE_PROJECT_NAME}.entrypoints=websecure
+      - traefik.http.routers.survey-${COMPOSE_PROJECT_NAME}.tls=true
+      - traefik.http.routers.survey-${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt
+    networks:
+      - ingress
   confidentialbackend:
     image: ghcr.io/uwcirg/helloworld-confidential-client-sof:${CONFIDENTIALBACKEND_IMAGE_TAG:-latest}
     environment:
@@ -6,21 +50,25 @@ services:
       REQUEST_CACHE_URL: redis://redis:6379/1
       SESSION_REDIS: redis://redis:6379/0
 
+      SECONDARY_SOURCE_STRATEGIES: "[]"
       PREFERRED_URL_SCHEME: https
       SESSION_COOKIE_SECURE: "true"
       # ultimate destination after SoF launch and backend auth
-      LAUNCH_DEST: https://confidentialbackend.${BASE_DOMAIN}/launch.html
+      LAUNCH_DEST: https://survey.${BASE_DOMAIN}/launch.html
 
       # do not pass launch/patient as Epic will infer standalone launch
-      LAUNCH_FHIR_SCOPES: user/*.read launch openid fhirUser
+      LAUNCH_FHIR_SCOPES: launch patient/*.cruds user/*.cruds openid fhirUser
       # TODO remove once removed from uwcirg/helloworld-confidential-client-sof
-      SOF_CLIENT_SCOPES: user/*.read launch openid fhirUser
+      SOF_CLIENT_SCOPES: launch patient/*.cruds user/*.cruds openid fhirUser
+      SOF_CLIENT_ID: ${SOF_CLIENT_ID:-hpai_openid_client}
+      SOF_AUTHORIZE_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/auth
+      SOF_ACCESS_TOKEN_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/token
+      SOF_JWKS_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/certs
     labels:
       - traefik.enable=true
       - traefik.http.routers.confidentialbackend-${COMPOSE_PROJECT_NAME}.rule=Host(`confidentialbackend.${BASE_DOMAIN}`) && (PathPrefix(`/auth`) || PathPrefix(`/fhir-router`) || PathPrefix(`/auditlog`))
 
       - traefik.http.routers.confidentialbackend-${COMPOSE_PROJECT_NAME}.entrypoints=websecure
-      - traefik.http.routers.confidentialbackend-${COMPOSE_PROJECT_NAME}.tls=true
       - traefik.http.routers.confidentialbackend-${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt
     networks:
       - ingress
@@ -31,6 +79,85 @@ services:
     image: redis
     networks:
       - internal
+  keycloak:
+    image: quay.io/keycloak/keycloak:${KEYCLOAK_IMAGE_TAG:-26.1}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.keycloak-${COMPOSE_PROJECT_NAME}.rule=Host(`keycloak.${BASE_DOMAIN}`)
+      - traefik.http.routers.keycloak-${COMPOSE_PROJECT_NAME}.entrypoints=websecure
+      - traefik.http.routers.keycloak-${COMPOSE_PROJECT_NAME}.tls=true
+      - traefik.http.routers.keycloak-${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt
+    command:
+      # https://www.keycloak.org/server/importExport#_importing_a_realm_during_startup
+      # recent Keycloak releases do not allow importing the master realm on startup; use old properties as workaround
+      # https://github.com/keycloak/keycloak/issues/12544#issuecomment-1191846726
+      - -Dkeycloak.migration.action=import
+      - -Dkeycloak.migration.provider=dir
+      - -Dkeycloak.migration.dir=/opt/keycloak/data/import
+      - -Dkeycloak.migration.strategy=IGNORE_EXISTING
+      - -Dkeycloak.migration.replace-placeholders=true
+      - start
+      - --log-console-output=json
+    environment:
+      # https://www.keycloak.org/server/all-config
+      KC_DB: postgres
+      KC_DB_URL_HOST: db
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: postgres
+
+      # https://www.keycloak.org/server/reverseproxy
+      KC_HTTP_ENABLED: "true"
+      KC_PROXY_HEADERS: xforwarded
+      # trust traefik Host headers
+      KC_HOSTNAME_STRICT: "false"
+
+      # logging
+      KC_SPI_EVENTS_LISTENER_JBOSS_LOGGING_SUCCESS_LEVEL: info
+      KC_SPI_EVENTS_LISTENER_JBOSS_LOGGING_ERROR_LEVEL: error
+
+      KEYCLOAK_ADMIN: admin
+
+      KEYCLOAK_SHL_CREATOR_BASE: https://${BASE_DOMAIN}
+      KEYCLOAK_SHL_CREATOR_LOGOUT_REDIRECT_URL: https://${BASE_DOMAIN}
+
+    volumes:
+      - ./config/keycloak/import/:/opt/keycloak/data/import:ro
+    depends_on:
+      - db
+    networks:
+      - ingress
+      - internal
+  fhir-auth:
+    image: ghcr.io/uwcirg/jwt-proxy:${PROXY_IMAGE_TAG:-latest}
+    environment:
+      UPSTREAM_SERVER: http://fhir-internal:8080
+      PASSTHRU_AUTH_HEADERS: false
+      OIDC_AUTHORIZE_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/auth
+      OIDC_TOKEN_URI: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/token
+      OIDC_TOKEN_INTROSPECTION_URI: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/token/introspect
+      JWKS_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/certs
+      PATH_WHITELIST: /fhir/metadata,/fhir/.well-known/smart-configuration
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.fhir-auth-${COMPOSE_PROJECT_NAME}.rule=Host(`fhir-auth.${BASE_DOMAIN}`)
+      - traefik.http.routers.fhir-auth-${COMPOSE_PROJECT_NAME}.entrypoints=websecure
+      - traefik.http.routers.fhir-auth-${COMPOSE_PROJECT_NAME}.tls=true
+      - traefik.http.routers.fhir-auth-${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt
+
+      # add CORS middleware, configured to return `Access-Control-Allow-Origin: *`
+      # NB accessControlAllowOrigin is deprecated, but not noted in docs
+      # https://github.com/traefik/traefik/issues/8796
+      - traefik.http.middlewares.fhir-auth-${COMPOSE_PROJECT_NAME}-cors.headers.accessControlAllowOriginList=*
+      # allow all verbs used by FHIR REST
+      - traefik.http.middlewares.fhir-auth-${COMPOSE_PROJECT_NAME}-cors.headers.accessControlAllowMethods=HEAD,GET,OPTIONS,PATCH,POST,PUT,DELETE
+      - traefik.http.middlewares.fhir-auth-${COMPOSE_PROJECT_NAME}-cors.headers.accessControlAllowHeaders=Authorization,Origin,Content-Type,Accept,Cache-Control
+      - traefik.http.routers.fhir-auth-${COMPOSE_PROJECT_NAME}.middlewares=fhir-auth-${COMPOSE_PROJECT_NAME}-cors
+    depends_on:
+      - aidbox
+    networks:
+      - ingress
+      - internal
+
   aidbox:
     image: healthsamurai/aidboxone:${AIDBOX_IMAGE_TAG:-2510}
     environment:
@@ -56,12 +183,17 @@ services:
       BOX_FHIR_SEARCH_INCLUDE_CONFORMANT: true
       BOX_FHIR_SEARCH_AUTHORIZE_INLINE_REQUESTS: true
       BOX_SECURITY_AUDIT_LOG_ENABLED: true
+      BOX_INIT_BUNDLE: file:///data/init-bundle.json
+    volumes:
+      - ./config/aidbox/init-bundle.json:/data/init-bundle.json:ro
     depends_on:
       - db
     expose:
       - 8080
     networks:
-      - internal
+      internal:
+        aliases:
+          - fhir-internal
     healthcheck:
       test: curl -f http://localhost:8080/health || exit 1
       interval: 5s
