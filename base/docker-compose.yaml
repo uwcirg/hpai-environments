@@ -50,6 +50,7 @@ services:
       REQUEST_CACHE_URL: redis://redis:6379/1
       SESSION_REDIS: redis://redis:6379/0
 
+      SECONDARY_SOURCE_STRATEGIES: "[]"
       PREFERRED_URL_SCHEME: https
       SESSION_COOKIE_SECURE: "true"
       # ultimate destination after SoF launch and backend auth
