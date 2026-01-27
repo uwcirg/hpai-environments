@@ -2,7 +2,7 @@ services:
   femr:
     image: ghcr.io/uwcirg/cosri-patientsearch:${FEMR_IMAGE_TAG:-develop}
     environment:
-      APPLICATION_TITLE: "HPAI Symptom Assessment and Reporting Guidance"
+      APPLICATION_TITLE: HPAI Symptom Assessment and Reporting Guidance
       MORE_MENU: ""
       OIDC_AUTHORIZE_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/auth
       OIDC_CLIENT_ID: femr_openid_client
