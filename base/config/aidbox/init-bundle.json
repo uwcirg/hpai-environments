@@ -335,6 +335,6 @@
         "method": "PUT",
         "url": "/QuestionnaireTheme/wa-doh-theme"
       }
-    },
+    }
   ]
 }
