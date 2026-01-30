@@ -301,6 +301,40 @@
         "method": "PUT",
         "url": "/Questionnaire/hpai-provider-questionnaire"
       }
-    }
+    },
+    {
+      "resource": {
+        "resourceType": "QuestionnaireTheme",
+        "input": {
+          "font-size": 14,
+          "hierarchy-padding": 0
+        },
+        "theme-name": "WA DOH Theme",
+        "brand-image": {
+          "top-right": {
+            "url": "https://uwcirg.github.io/cirg.washington.edu/images/logos/DOH_logo_primary_122122_pic.jpg"
+          },
+          "bottom-left": {
+            "url": "https://uwcirg.github.io/cirg.washington.edu/images/logos/DOH_logo_primary_122122_words2.png"
+          }
+        },
+        "base-font-size": 14,
+        "id": "wa-doh-theme",
+        "meta": {
+          "lastUpdated": "2026-01-30T01:13:51.227462Z",
+          "versionId": "874",
+          "extension": [
+            {
+              "url": "https://aidbox.app/ex/createdAt",
+              "valueInstant": "2026-01-30T01:13:51.227462Z"
+            }
+          ]
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "/QuestionnaireTheme/wa-doh-theme"
+      }
+    },
   ]
 }
