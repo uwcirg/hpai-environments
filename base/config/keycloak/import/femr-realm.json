@@ -1322,7 +1322,7 @@
     "providerId" : "google",
     "enabled" : "${KEYCLOAK_GOOGLE_IDP_ENABLED}",
     "updateProfileFirstLoginMode" : "on",
-    "trustEmail" : false,
+    "trustEmail" : true,
     "storeToken" : false,
     "addReadTokenRoleOnCreate" : false,
     "authenticateByDefault" : false,
