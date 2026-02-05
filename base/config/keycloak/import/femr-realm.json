@@ -1315,7 +1315,25 @@
   "enabledEventTypes": [],
   "adminEventsEnabled": false,
   "adminEventsDetailsEnabled": false,
-  "identityProviders": [],
+  "identityProviders" : [ {
+    "alias" : "google",
+    "displayName" : "Google",
+    "internalId" : "b65f395d-cfa1-4a36-aae1-1b32dd377538",
+    "providerId" : "google",
+    "enabled" : "${KEYCLOAK_GOOGLE_IDP_ENABLED}",
+    "updateProfileFirstLoginMode" : "on",
+    "trustEmail" : true,
+    "storeToken" : false,
+    "addReadTokenRoleOnCreate" : false,
+    "authenticateByDefault" : false,
+    "linkOnly" : false,
+    "hideOnLogin" : false,
+    "config" : {
+      "syncMode" : "LEGACY",
+      "clientSecret" : "${KEYCLOAK_GOOGLE_IDP_CLIENT_SECRET}",
+      "clientId" : "${KEYCLOAK_GOOGLE_IDP_CLIENT_ID}"
+    }
+  } ],
   "identityProviderMappers": [],
   "components": {
     "org.keycloak.services.clientregistration.policy.ClientRegistrationPolicy": [
