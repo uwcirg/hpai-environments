@@ -37,15 +37,20 @@
     </#if>
 </head>
 <body class="${properties.kcBodyClass!}">
+    <#if properties.systemType?has_content>
+            <div id="kc-system-type">${kcSanitize(msg("systemType", properties.systemType))?no_esc}</div>
+    </#if>
     <div class="${properties.kcLoginClass!}">
         <header id="header">
             <img src="${url.resourcesPath}/img/${properties.companyLogo!}" alt="Company Logo" style="height:100%">
         </header>
         <div id="kc-header" class="${properties.kcHeaderClass!}">
             <div id="kc-header-wrapper" class="${properties.kcHeaderWrapperClass!}">
+                <#--
                 <img class="kc-header-logo" src="${url.resourcesPath}/img/${properties.logo!}" alt="Logo">
-                <#if properties.systemType?has_content>
-                    <div id="kc-system-type">${kcSanitize(msg("systemType", properties.systemType))?no_esc}</div>
+                -->
+                <#if properties.siteName?has_content>
+                    <div id="kc-site-name">${kcSanitize(properties.siteName)?no_esc}</div>
                 </#if>
                 <#if properties.loginInfoMessage?has_content>
                     <div id="kc-login-info-message">${kcSanitize(properties.loginInfoMessage)?no_esc}</div>
