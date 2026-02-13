@@ -335,6 +335,27 @@
         "method": "PUT",
         "url": "/QuestionnaireTheme/wa-doh-theme"
       }
+    },
+    {
+      "resource": {
+        "resourceType": "SDCConfig",
+        "id": "wa-doh-sdcconfig",
+        "name": "WA DOH configuration",
+        "description": "WA DOH customizations",
+        "default": true,
+        "language": "en",
+        "theme": {
+          "id": "wa-doh-theme",
+          "resourceType": "QuestionnaireTheme"
+        },
+        "form": {
+          "hide-print-button": true
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "/SDCConfig/wa-doh-sdcconfig"
+      }
     }
   ]
 }
