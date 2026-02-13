@@ -402,7 +402,8 @@
         "frontchannel.logout.session.required": "true",
         "oauth2.device.authorization.grant.enabled": "false",
         "display.on.consent.screen": "false",
-        "backchannel.logout.revoke.offline.tokens": "false"
+        "backchannel.logout.revoke.offline.tokens": "false",
+        "login_theme": "wa_doh"
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
@@ -1308,6 +1309,7 @@
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
   "smtpServer": {},
+  "loginTheme": "wa_doh",
   "eventsEnabled": false,
   "eventsListeners": [
     "jboss-logging"
@@ -1315,25 +1317,27 @@
   "enabledEventTypes": [],
   "adminEventsEnabled": false,
   "adminEventsDetailsEnabled": false,
-  "identityProviders" : [ {
-    "alias" : "google",
-    "displayName" : "Google",
-    "internalId" : "b65f395d-cfa1-4a36-aae1-1b32dd377538",
-    "providerId" : "google",
-    "enabled" : "${KEYCLOAK_GOOGLE_IDP_ENABLED}",
-    "updateProfileFirstLoginMode" : "on",
-    "trustEmail" : true,
-    "storeToken" : false,
-    "addReadTokenRoleOnCreate" : false,
-    "authenticateByDefault" : false,
-    "linkOnly" : false,
-    "hideOnLogin" : false,
-    "config" : {
-      "syncMode" : "LEGACY",
-      "clientSecret" : "${KEYCLOAK_GOOGLE_IDP_CLIENT_SECRET}",
-      "clientId" : "${KEYCLOAK_GOOGLE_IDP_CLIENT_ID}"
+  "identityProviders" : [
+    {
+      "alias" : "google",
+      "displayName" : "Google",
+      "internalId" : "b65f395d-cfa1-4a36-aae1-1b32dd377538",
+      "providerId" : "google",
+      "enabled" : "${KEYCLOAK_GOOGLE_IDP_ENABLED}",
+      "updateProfileFirstLoginMode" : "on",
+      "trustEmail" : true,
+      "storeToken" : false,
+      "addReadTokenRoleOnCreate" : false,
+      "authenticateByDefault" : false,
+      "linkOnly" : false,
+      "hideOnLogin" : false,
+      "config" : {
+        "syncMode" : "LEGACY",
+        "clientSecret" : "${KEYCLOAK_GOOGLE_IDP_CLIENT_SECRET}",
+        "clientId" : "${KEYCLOAK_GOOGLE_IDP_CLIENT_ID}"
+      }
     }
-  } ],
+  ],
   "identityProviderMappers": [],
   "components": {
     "org.keycloak.services.clientregistration.policy.ClientRegistrationPolicy": [
