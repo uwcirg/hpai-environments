@@ -125,11 +125,6 @@ services:
       KEYCLOAK_SHL_CREATOR_BASE: https://${BASE_DOMAIN}
       KEYCLOAK_SHL_CREATOR_LOGOUT_REDIRECT_URL: https://${BASE_DOMAIN}
 
-      # disable theme caching
-      KC_SPI_THEME_STATIC_MAX_AGE: "-1"
-      KC_SPI_THEME_CACHE_THEMES: "false"
-      KC_SPI_THEME_CACHE_TEMPLATES: "false"
-
     volumes:
       - ./config/keycloak/import/:/opt/keycloak/data/import:ro
       - ./config/keycloak/themes/:/opt/keycloak/themes:ro
