@@ -356,6 +356,40 @@
         "method": "PUT",
         "url": "/SDCConfig/wa-doh-sdcconfig"
       }
+    },
+    {
+      "resource": {
+        "resourceType": "ViewDefinition",
+        "id": "hpai-questionnaire-report",
+        "name": "hpai_questionnaire_report",
+        "resource": "QuestionnaireResponse",
+        "status": "active",
+        "where": [
+          {
+            "path": "questionnaire = 'http://forms.aidbox.io/questionnaire/hpai-provider-questionnaire'"
+          }
+        ],
+        "select": [
+          {
+            "column": [
+              { "name": "qr_id", "path": "id" },
+              { "name": "authored", "path": "authored" },
+              { "name": "patient_id", "path": "subject.id" },
+              { "name": "contact_with_infected_person", "path": "item.where(linkId='hpai-0').answer.value.ofType(Coding).display" },
+              { "name": "contact_with_infected_person_notes", "path": "item.where(linkId='hpai-0').answer.item.where(linkId='hpai-0B').answer.value.ofType(string)" },
+              { "name": "contact_with_sick_dead_animals", "path": "item.where(linkId='hpai-1').answer.value.ofType(Coding).display" },
+              { "name": "contact_with_sick_dead_animals_notes", "path": "item.where(linkId='hpai-1').answer.item.where(linkId='hpai-1B').answer.value.ofType(string)" },
+              { "name": "patient_setting", "path": "item.where(linkId='hpai-setting').answer.value.ofType(Coding).display" },
+              { "name": "raw_animal_foods", "path": "item.where(linkId='hpai-3').answer.value.ofType(Coding).display" },
+              { "name": "raw_animal_foods_notes", "path": "item.where(linkId='hpai-3').answer.item.where(linkId='hpai-3B').answer.value.ofType(string)" }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "/ViewDefinition/hpai-questionnaire-report"
+      }
     }
   ]
 }
