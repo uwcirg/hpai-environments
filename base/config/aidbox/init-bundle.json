@@ -390,6 +390,17 @@
         "method": "PUT",
         "url": "/ViewDefinition/hpai-questionnaire-report"
       }
+    },
+    {
+      "resource": {
+        "resourceType": "AidboxQuery",
+        "id": "hpai-questionnaire-report",
+        "query": "select * from sof.hpai_questionnaire_report"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "/AidboxQuery/hpai-questionnaire-report"
+      }
     }
   ]
 }
