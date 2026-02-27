@@ -360,8 +360,8 @@
     {
       "resource": {
         "resourceType": "ViewDefinition",
-        "id": "hpai_questionnaire_report",
-        "name": "hpai_questionnaire_report",
+        "id": "vd_qr_hpai",
+        "name": "vd_qr_hpai",
         "resource": "QuestionnaireResponse",
         "status": "active",
         "where": [
@@ -387,18 +387,71 @@
         ]
       },
       "request": {
-        "method": "PUT",
-        "url": "/ViewDefinition/hpai_questionnaire_report"
+        "method": "POST",
+        "url": "/ViewDefinition"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "ViewDefinition/vd_qr_hpai/$materialize"
+      },
+      "resource": {
+        "resourceType": "Parameters",
+        "parameter": [
+          {
+            "name": "type",
+            "valueCode": "view"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "ViewDefinition",
+        "id": "vd_patient_simple",
+        "name": "vd_patient_simple",
+        "resource": "Patient",
+        "status": "active",
+        "select": [
+          {
+            "column": [
+              { "name": "patient_id", "path": "id" },
+              { "name": "name_given", "path": "name[0].given[0]" },
+              { "name": "name_family", "path": "name[0].family" },
+              { "name": "birthdate", "path": "birthDate" }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "/ViewDefinition"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "ViewDefinition/vd_patient_simple/$materialize"
+      },
+      "resource": {
+        "resourceType": "Parameters",
+        "parameter": [
+          {
+            "name": "type",
+            "valueCode": "view"
+          }
+        ]
       }
     },
     {
       "resource": {
         "resourceType": "AidboxQuery",
-        "query": "select * from sof.hpai_questionnaire_report"
+        "query": "select pt.name_family, pt.name_given, pt.birthdate, qr.authored, qr.contact_with_infected_person, qr.contact_with_infected_person_notes, qr.contact_with_sick_dead_animals, qr.contact_with_sick_dead_animals_notes, qr.patient_setting, qr.raw_animal_foods, qr.raw_animal_foods_notes, pt.patient_id, qr.qr_id from sof.vd_patient_simple pt join sof.vd_qr_hpai qr on qr.patient_id = pt.patient_id;"
       },
       "request": {
         "method": "PUT",
-        "url": "/AidboxQuery/hpai_qr_report_query"
+        "url": "/AidboxQuery/aidboxquery_hpai_qr_report"
       }
     }
   ]
