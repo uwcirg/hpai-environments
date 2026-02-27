@@ -360,7 +360,7 @@
     {
       "resource": {
         "resourceType": "ViewDefinition",
-        "id": "hpai-questionnaire-report",
+        "id": "hpai_questionnaire_report",
         "name": "hpai_questionnaire_report",
         "resource": "QuestionnaireResponse",
         "status": "active",
@@ -388,18 +388,17 @@
       },
       "request": {
         "method": "PUT",
-        "url": "/ViewDefinition/hpai-questionnaire-report"
+        "url": "/ViewDefinition/hpai_questionnaire_report"
       }
     },
     {
       "resource": {
         "resourceType": "AidboxQuery",
-        "id": "hpai-questionnaire-report",
         "query": "select * from sof.hpai_questionnaire_report"
       },
       "request": {
         "method": "PUT",
-        "url": "/AidboxQuery/hpai-questionnaire-report"
+        "url": "/AidboxQuery/hpai_qr_report_query"
       }
     }
   ]
