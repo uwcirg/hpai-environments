@@ -16,7 +16,7 @@ services:
 
       # FHIR URL passed to SoF client
       SOF_HOST_FHIR_URL: https://fhir-auth.${BASE_DOMAIN}/fhir
-      SOF_CLIENTS: '[{"id":"SURVEY", "label":"Assess", "launch_url":"https://confidentialbackend.${BASE_DOMAIN}/auth/launch"}]'
+      SOF_CLIENTS: '[{"id":"SURVEY", "label":"Assess", "launch_url":"https://confidentialbackend.${BASE_DOMAIN}/auth/launch"}, {"id":"REPORT", "label":"Summary Report", "standalone": "true", "launch_url":"https://confidentialbackend.${BASE_DOMAIN}/auth/launch"}]'
       REDIS_URL: redis://redis:6379/2
       # MAP_API: http://fhir-internal:8080/fhir/
       MAP_API: https://fhir-auth.${BASE_DOMAIN}/fhir/
