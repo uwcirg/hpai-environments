@@ -37,7 +37,7 @@ services:
     environment:
       REACT_APP_CONF_API_URL: https://confidentialbackend.${BASE_DOMAIN}
       REACT_APP_DASHBOARD_URL: https://femr.${BASE_DOMAIN}
-      REACT_APP_REPORT_URL: https://aidbox.${BASE_DOMAIN}/$$query/aidboxquery_hpai_qr_report
+      REACT_APP_FHIR_URL: https://aidbox.${BASE_DOMAIN}
       REACT_APP_SYSTEM_TYPE: development
       REACT_APP_QUESTIONNAIRE_ID: hpai-provider-questionnaire
     labels:
