@@ -3,6 +3,13 @@ services:
     image: ghcr.io/uwcirg/cosri-patientsearch:${FEMR_IMAGE_TAG:-develop}
     environment:
       APPLICATION_TITLE: HPAI Symptom Assessment and Reporting Guidance
+      DASHBOARD_COLUMNS: >-
+        [{"label": "First Name", "expr": "$.name[0].given[0]"},
+        {"label": "Last Name", "expr": "$.name[0].family"},
+        {"label": "Birth Date", "expr": "$.birthDate"},
+        {"label": "Last Assessed", "expr": "$.resources[?(@.resourceType==\'QuestionnaireResponse\')].authored", "dataType": "date", "sorting": false}]
+      FHIR_REST_EXTRA_PARAMS_LIST: >-
+        ["QuestionnaireResponse?_elements=resourceType,authored,subject&_sort=-authored"]
       MORE_MENU: ""
       OIDC_AUTHORIZE_URL: https://keycloak.${BASE_DOMAIN}/realms/femr/protocol/openid-connect/auth
       OIDC_CLIENT_ID: femr_openid_client
@@ -37,6 +44,7 @@ services:
     environment:
       REACT_APP_CONF_API_URL: https://confidentialbackend.${BASE_DOMAIN}
       REACT_APP_DASHBOARD_URL: https://femr.${BASE_DOMAIN}
+      REACT_APP_FHIR_URL: https://aidbox.${BASE_DOMAIN}
       REACT_APP_SYSTEM_TYPE: development
       REACT_APP_QUESTIONNAIRE_ID: hpai-provider-questionnaire
     labels:
