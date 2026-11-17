@@ -387,8 +387,8 @@
         ]
       },
       "request": {
-        "method": "POST",
-        "url": "/ViewDefinition"
+        "method": "PUT",
+        "url": "/ViewDefinition/vd_qr_hpai"
       }
     },
     {
@@ -425,8 +425,8 @@
         ]
       },
       "request": {
-        "method": "POST",
-        "url": "/ViewDefinition"
+        "method": "PUT",
+        "url": "/ViewDefinition/vd_patient_simple"
       }
     },
     {
