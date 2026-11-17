@@ -1,0 +1,136 @@
+{
+  "questionnaire": "http://forms.aidbox.io/questionnaire/hpai-provider-questionnaire",
+  "meta": {
+    "lastUpdated": "2026-02-26T22:53:15.293790Z",
+    "versionId": "588",
+    "extension": [
+      {
+        "url": "https://aidbox.app/ex/createdAt",
+        "valueInstant": "2026-02-26T22:51:48.967669Z"
+      }
+    ]
+  },
+  "item": [
+    {
+      "text": "WA DOH suggests that healthcare systems add the following screening questions for patients with ILI:\n\n  \nIn the **10 days before symptom onset**, has the patient had: ",
+      "linkId": "OZeDhhS5"
+    },
+    {
+      "text": "...contact (within 6 feet) with a **person who is suspected or confirmed to** have avian influenza, also called \"bird flu\"?",
+      "answer": [
+        {
+          "item": [
+            {
+              "text": "Please add brief notes for the public health investigator",
+              "answer": [
+                {
+                  "valueString": "Yes, my roommate tested positive."
+                }
+              ],
+              "linkId": "hpai-0B"
+            }
+          ],
+          "valueCoding": {
+            "code": "hpai-0-yes",
+            "display": "Yes"
+          }
+        }
+      ],
+      "linkId": "hpai-0"
+    },
+    {
+      "text": "...close contact with  **sick or dead animals** or their environments, including birds, wildlife, livestock (e.g., cows, pigs, or poultry), or domestic cats?",
+      "answer": [
+        {
+          "item": [
+            {
+              "text": "Please add brief notes for the public health investigator",
+              "answer": [
+                {
+                  "valueString": "I think so - we have a backyard chicken shed."
+                }
+              ],
+              "linkId": "hpai-1B"
+            }
+          ],
+          "valueCoding": {
+            "code": "hpai-1-yes",
+            "display": "Yes"
+          }
+        }
+      ],
+      "linkId": "hpai-1"
+    },
+    {
+      "text": "### Use contact, droplet, and airborne precautions with eye protection (goggles or face shield). If possible, isolate the patient in an airborne infection isolation room (AIIR; negative pressure room).\n \n \nThis patient has a **Notifiable condition in WA State** and should be reported to your local health department.",
+      "linkId": "hpai-rec-0"
+    },
+    {
+      "text": "Is the patient in an outpatient or inpatient setting?",
+      "answer": [
+        {
+          "item": [
+            {
+              "text": "#### This link offers information about outpatient isolation protocols (this URL is just an example): \n\n[https://www.cdc.gov/bird-flu/hcp/clinicians-evaluating-patients/](https://www.cdc.gov/bird-flu/hcp/clinicians-evaluating-patients/)",
+              "linkId": "kHqagscX"
+            }
+          ],
+          "valueCoding": {
+            "code": "hpai-setting-out",
+            "display": "Outpatient"
+          }
+        }
+      ],
+      "linkId": "hpai-setting"
+    },
+    {
+      "text": "_______________________________",
+      "linkId": "Ao2sQ8Sr"
+    },
+    {
+      "text": "Has the patient consumed or handled **raw animal foods for humans or pets** (e.g., raw cow milk, cheeses or other products made with raw cow milk, raw meat, or raw meat-based pet food)?",
+      "answer": [
+        {
+          "item": [
+            {
+              "text": "Please add brief notes for the public health investigator",
+              "answer": [
+                {
+                  "valueString": "Yes, raw goat milk."
+                }
+              ],
+              "linkId": "hpai-3B"
+            }
+          ],
+          "valueCoding": {
+            "code": "hpai-3-yes",
+            "display": "Yes"
+          }
+        }
+      ],
+      "linkId": "hpai-3"
+    }
+  ],
+  "resourceType": "QuestionnaireResponse",
+  "author": {
+    "identifier": {
+      "type": {
+        "coding": [
+          {
+            "code": "UID",
+            "system": "urn:system:aidbox",
+            "display": "User ID"
+          }
+        ]
+      },
+      "value": "admin",
+      "system": "https://aidbox.hpai.doh.dev.cirg.uw.edu"
+    }
+  },
+  "status": "completed",
+  "id": "6ce170e3-36b9-4f71-89b3-d495ae4ffb10",
+  "authored": "2026-02-26T22:53:13.432Z",
+  "subject": {
+    "reference": "Patient/185337c5-82bb-47c8-9393-13f0c43dfb45"
+  }
+}
